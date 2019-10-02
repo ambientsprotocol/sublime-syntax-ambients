@@ -1,0 +1,72 @@
+%YAML 1.2
+---
+# See http://www.sublimetext.com/docs/3/syntax.html
+name: Ambients (ambicobjs ascii syntax)
+file_extensions:
+  - amb
+  - ambient
+scope: source
+contexts:
+  main:
+    # Scope naming rules:
+    # https://www.sublimetext.com/docs/3/scope_naming.html
+
+    # Strings
+    - match: '"'
+      scope: punctuation.definition.string.begin
+      push: double_quoted_string
+
+    # Comments (not part of the ambient ascii syntax)
+    - match: '//'
+      scope: punctuation.definition.comment
+      push: line_comment
+
+    # Ambient Calculus Keywords
+    - match: '\b(in|in_|out|out_|open|open_|nu|rec)\b'
+      scope: keyword.operator
+
+    # Ambients Protocol Primitives
+    - match: '\b(func|arg|call|return)\b'
+      scope: constant.numeric
+    # Primitives - types
+    - match: '\b(address)\b'
+      scope: string.quoted.single
+    - match: '\b(string|int|bool)\b'
+      scope: string.quoted.single
+
+    # Pipe
+    - match: '\b\s|\||\s\b'
+      scope: keyword.operator
+    # Brackets
+    - match: '\b\s|\]|\s\b'
+      scope: entity.name.class
+    - match: '\b\[|\s\b'
+      scope: entity.name.class
+    # Parenthesis
+    - match: '\b\s|\)|\s\b'
+      scope: entity.name.class
+    - match: '\b\s|\(|\s\b'
+      scope: entity.name.class
+    # Dot
+    - match: '\b\.\b'
+      scope: entity.name.class
+    # Recursion start/end
+    - match: '[A-Z]\b'
+      scope: entity.name.class
+    # Numbers
+    - match: '\b(-)?[0-9]+\b'
+      scope: constant.numeric
+
+  double_quoted_string:
+    - meta_scope: string.quoted.double
+    - match: '\\.'
+      scope: constant.character.escape
+    - match: '"'
+      scope: punctuation.definition.string.end
+      pop: true
+
+  line_comment:
+    - meta_scope: comment.line
+    - match: $
+      pop: true
+
